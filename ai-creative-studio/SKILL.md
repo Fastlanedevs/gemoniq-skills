@@ -33,7 +33,7 @@ If **missing**, ask the user inline:
 Once the user pastes the key, save it for them automatically:
 
 ```bash
-mkdir -p ~/.gemoniq-studio && printf '{"api_key": "%s"}\n' "<pasted-key>" > ~/.gemoniq-studio/config.json && chmod 600 ~/.gemoniq-studio/config.json
+mkdir -p ~/.gemoniq-studio && printf '{"STUDIO_API_KEY": "%s"}\n' "<pasted-key>" > ~/.gemoniq-studio/config.json && chmod 600 ~/.gemoniq-studio/config.json
 ```
 
 Do **not** instruct the user to run `export` or hand-edit the config file themselves — the agent handles setup. `STUDIO_BASE_URL` is optional and defaults to `https://app.gemoniq.com`.
