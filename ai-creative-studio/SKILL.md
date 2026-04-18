@@ -28,7 +28,7 @@ Also accept `STUDIO_API_KEY` exported in the environment (`echo ${STUDIO_API_KEY
 
 If **missing**, ask the user inline:
 
-> Before we generate anything, this skill needs a `STUDIO_API_KEY`. Grab one at https://app.gemoniq.com/settings/api and paste it here — I'll save it to `~/.gemoniq-studio/config.json` for you so you don't have to set it up again.
+> Before we generate anything, this skill needs a `STUDIO_API_KEY`. Grab one at https://app.gemoniq.com/settings/api and paste it here — I'll save it for you so you don't have to set it up again.
 
 Once the user pastes the key, save it for them automatically:
 

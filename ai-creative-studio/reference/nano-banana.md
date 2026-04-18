@@ -1,28 +1,12 @@
-# Nano Banana 2 -- Complete Image Prompting Guide
-
-Source: Google Cloud Blog "The ultimate Nano Banana prompting guide" + Google DeepMind prompt guide
-
-## Models
-
-| Model | API ID | Base | Speed | Text Rendering |
-|-------|--------|------|-------|----------------|
-| Nano Banana 2 | `gemini-3.1-flash-image-preview` | Gemini 3.1 Flash | Fast | Short words only |
-| Nano Banana Pro | `gemini-3-pro-image-preview` | Gemini 3 Pro | Slower | Flawless sentences |
-
 ### Tech Specs
 
 | Spec | Nano Banana 2 (3.1 Flash) | Nano Banana Pro (3 Pro) |
 |------|---------------------------|------------------------|
-| Input tokens | 131,072 max | 65,536 max |
-| Output tokens | 32,768 max | 32,768 max |
 | Resolutions | 512, 1K, 2K, 4K | 1K, 2K, 4K |
 | Aspect ratios | 1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9, 1:4, 4:1, 1:8, 8:1 | 1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9 |
 | Object refs | Up to 10 | Up to 6 |
 | Character refs | Up to 4 | Up to 5 |
 | Total refs | Up to 14 | Up to 11 |
-| Knowledge cutoff | January 2025 | January 2025 |
-| Live data | Real-time web search | Real-time web search |
-| Trust & safety | C2PA + SynthID watermark | C2PA + SynthID watermark |
 
 ### API Parameters
 
