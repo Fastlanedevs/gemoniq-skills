@@ -14,6 +14,30 @@ user-invocable: true
 
 Takes loose creative context and converts it into a highly technical Nano Banana 2 prompt, then generates the image.
 
+## Prerequisites
+
+**Before doing anything else, verify the `STUDIO_API_KEY` is configured.** Do this check *first* — do not gather context, engineer prompts, or run any generation commands until the key is in place. Otherwise the user invests effort upfront and only hits a credential prompt at the end of the workflow.
+
+Run this check:
+
+```bash
+test -f ~/.gemoniq-studio/config.json && echo "configured" || echo "missing"
+```
+
+Also accept `STUDIO_API_KEY` exported in the environment (`echo ${STUDIO_API_KEY:+set}`).
+
+If **missing**, ask the user inline:
+
+> Before we generate anything, this skill needs a `STUDIO_API_KEY`. Grab one at https://app.gemoniq.com/settings/api and paste it here — I'll save it to `~/.gemoniq-studio/config.json` for you so you don't have to set it up again.
+
+Once the user pastes the key, save it for them automatically:
+
+```bash
+mkdir -p ~/.gemoniq-studio && printf '{"api_key": "%s"}\n' "<pasted-key>" > ~/.gemoniq-studio/config.json && chmod 600 ~/.gemoniq-studio/config.json
+```
+
+Do **not** instruct the user to run `export` or hand-edit the config file themselves — the agent handles setup. `STUDIO_BASE_URL` is optional and defaults to `https://app.gemoniq.com`.
+
 ## Step 1: Gather Context
 
 Collect the following from the user (all optional except specific context):
@@ -78,7 +102,7 @@ python scripts/generate_image.py \
     --ref <style_reference>
 ```
 
-**Credentials.** On first run the script prompts for `STUDIO_API_KEY` and saves it to `~/.gemoniq-studio/config.json` (outside the skill folder). Subsequent runs read it automatically. Override via `export STUDIO_API_KEY=...` if preferred. `STUDIO_BASE_URL` defaults to `https://app.gemoniq.com` — set the env var to point at a local server during dev.
+**Credentials.** Already handled in the Prerequisites step above. The script also reads the same `~/.gemoniq-studio/config.json` or `STUDIO_API_KEY` env var as a fallback.
 
 **Flag reference:**
 - `--prompt` -- the engineered prompt (required)
