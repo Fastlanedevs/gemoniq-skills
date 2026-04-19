@@ -51,15 +51,28 @@ Don't instruct the user to run `export` or hand-edit the config -- the agent han
 ## Step 1: Gather Source + Context
 
 **Required:**
-- **Source creative** -- the image the user wants to diversify from. This is the product anchor; the product shown here is preserved in every output variant.
+- **Source creative** -- the image the user wants to diversify from. This carries the brand aesthetic (palette, typography, lighting family, mood) that every variant should inherit.
+
+### 1a. Analyze the source creative for a product anchor
+
+Before moving on, look at the source creative carefully and decide: does it prominently feature a specific physical product (packaging, bottle, device, garment, appliance, food item, etc.)?
+
+**If yes -- always ask the user for additional product shots before continuing:**
+
+> I can see a [concrete product description, e.g. "matte black skincare serum bottle with gold lettering"] in your creative. Do you have any other photos of this specific product -- different angles, a clean product shot on plain background, or other SKU variants? Adding 2-3 product images dramatically improves how consistent the product looks across the diversified set. Drop them in, or say "no" if this is the only one.
+
+Why this matters: with a single reference, the model often hallucinates product details (wrong label text, wrong cap shape, wrong color) when the scene changes dramatically. Multiple angles anchor the product's 3D identity so it holds up under the wider scene changes that motivator diversity demands. Don't skip this ask -- it's the single biggest lever on output quality.
+
+If no product is featured (e.g. the creative is a typographic poster, an abstract brand visual, a lifestyle scene with no hero product), skip this and treat the source creative as the sole reference.
+
+### 1b. Other context
 
 **Strongly recommended (each one sharpens the motivator work):**
 - **Brand** -- name, category, palette, typography, tone
 - **Audience** -- who the brand sells to (demographics, mindset, what they care about)
-- **Additional product images** -- other angles or SKUs, so the product anchor stays robust across scenes
 - **Constraints** -- "leave copy space top-left", "keep logo placement", "never change the bottle color", "must include the tagline"
 
-If the user drops in only the source image, ask one short clarifier:
+If the user has only given you the source image and a one-liner, ask one short clarifier:
 
 > Who's the audience for this product, and what are the main reasons they'd buy it -- or hesitate to buy it? Any constraints I should respect (leave copy space, keep logo placement, etc.)?
 
@@ -119,8 +132,13 @@ Show this table plus the full engineered prompts. Let the user tweak motivators,
 
 Every prompt must preserve the product anchor while pushing hard on motivator and format. Prompt structure:
 
-1. **Anchor lock (first line):**
-   > "Use the attached reference images. Keep the product design, shape, color, branding, typography, and proportions EXACTLY as shown in the reference. Only the surrounding scene, mood, framing, and composition change."
+1. **Anchor lock (first block).** The lock language depends on which references are attached. Pick the matching case -- the explicit role labeling matters because without it the model averages across refs and product details drift.
+
+   **Case A -- only the source creative is attached (no separate product shots):**
+   > "Use the attached reference image. Keep the product design, shape, color, branding, typography, and proportions EXACTLY as shown. Only the surrounding scene, mood, framing, and composition change."
+
+   **Case B -- source creative + product images are attached (preferred when a product is featured):**
+   > "Two reference types are attached. The first image is the existing creative -- use it to match the brand palette, lighting family, typography style, and overall aesthetic direction. The remaining images are product anchor shots -- use these to keep the product's shape, color, label, branding, and proportions EXACTLY correct. If any product detail in the scene would differ from the product anchor shots, the product anchor shots win. Only the surrounding scene, mood, framing, and composition change."
 
 2. **State the motivator-driven concept** -- what's the ad *saying*, as a felt moment. "A woman in a bathrobe lit by morning window light, calmly holding the bottle, reassured expression" lands harder than "lifestyle shot of product user".
 
@@ -130,7 +148,14 @@ Every prompt must preserve the product anchor while pushing hard on motivator an
 
 5. **Quality tail:** `masterpiece, high quality, sharp focus, 8K detail`
 
-**Always pass the source creative as the first `--ref`.** If the user provided additional product images, pass those too (up to 4 total refs). More product references = better product anchoring, especially when the scene changes dramatically.
+### Reference ordering
+
+Always pass references in this order so the prompt's role labeling matches the actual `--ref` sequence:
+
+1. **First ref = source creative** (the brand-aesthetic anchor)
+2. **Subsequent refs = product images** (the product-identity anchors), in order of how clearly each shows the product
+
+Cap is 4 refs per call. If the user gave more than 3 product images, pick the 3 that show the product most clearly across distinct angles (front, side, detail / label close-up). Drop redundant near-duplicates -- four shots of the same angle hurt more than they help.
 
 For concrete language on lighting, camera/lens (lo-fi vs hi-fi control), color grading / film stocks, materiality, and text overlays, see `reference/nano-banana.md`. Consult it when you need to sharpen a prompt beyond the structural rules above -- especially when a format delta isn't landing (reach for camera/lens cues) or the mood needs to differ between motivators (reach for lighting recipes).
 

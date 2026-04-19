@@ -82,13 +82,22 @@ Generic descriptions produce generic images. Be concrete about the non-product s
 
 Keep headlines short (2-5 words). Long copy rarely renders cleanly; pair short headline + implied supporting copy space.
 
-## Reference image anchor rule
+## Reference images -- two roles, label them in the prompt
 
-- Pass the source creative as the **first** `--ref` every time.
-- Pass additional product images (different angles/SKUs) when available -- more refs = better product consistency when the scene changes dramatically.
-- Up to 4 refs per call.
-- Lock language: *"Keep the product design, shape, color, branding, typography, and proportions EXACTLY as shown in the reference. Only the surrounding scene, mood, framing, and composition change."*
-- If the product is distorting, name the specific part that keeps breaking: *"Keep the bottle silhouette, label placement, and cap color EXACTLY."*
+References do double duty: one says "this is the brand look", others say "this is the exact product." The model averages across refs unless you tell it which is which, so always disambiguate the roles in the prompt text.
+
+**Ordering (always):**
+1. First `--ref` = source creative (brand aesthetic anchor: palette, lighting, typography, mood)
+2. Subsequent `--ref`s = product images (product identity anchors: shape, label, color, branding)
+
+Cap is 4 refs total. If you have more than 3 product shots, keep the 3 most distinct angles (front + side + detail/label close-up); drop near-duplicates.
+
+**Lock language by case:**
+
+- *Source creative only:* "Use the attached reference image. Keep the product design, shape, color, branding, typography, and proportions EXACTLY as shown."
+- *Source creative + product images:* "Two reference types are attached. The first image is the existing creative -- use it to match the brand palette, lighting family, typography style, and aesthetic direction. The remaining images are product anchor shots -- use these to keep the product's shape, color, label, branding, and proportions EXACTLY correct. If any product detail in the scene would differ from the product anchor shots, the product anchor shots win."
+
+**When the product is still distorting:** name the specific part that keeps breaking. *"Keep the bottle silhouette, label placement, and cap color EXACTLY as in the product reference shots."* Generic locks slip; named-part locks hold.
 
 ## Quality tail
 
