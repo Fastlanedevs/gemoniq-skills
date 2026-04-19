@@ -1,20 +1,17 @@
 ---
 name: creative-diversity
 description: |
-  Creative Diversity -- generate a diversified on-brand ad set from a single source creative by
-  changing WHY each ad works, not just how it looks. Takes a source creative (the product anchor)
-  plus optional brand + audience context, then produces a set of variants driven by distinct
-  customer motivators/barriers, each executed across differentiated formats.
-  Default output is 3 motivators x 2 formats = 6 on-brand creatives, with the product preserved
-  across all of them and the concept + format deliberately varied.
-  Use when: the user has a creative and wants a diversified ad set, wants to test multiple hooks,
-  wants creatives that address different customer reasons, needs to fill a media mix across
-  placements, wants "more like this" but meaningfully different, or needs batch creative for A/B or
-  multi-audience testing.
-  Make sure to use this skill whenever the user mentions creative diversity, diversified creatives,
-  ad set, multi-concept ads, different angles, different hooks, different motivators, customer
-  reasons, variants, remixes, resizes, seasonal spins, multiple backgrounds, or batch creatives --
-  even if they do not explicitly say "diversity".
+  Generate a diversified on-brand ad set from one source creative by changing WHY each ad works,
+  not just how it looks. Takes the source creative (product anchor) plus optional brand/audience
+  context, then produces variants driven by distinct customer motivators/barriers, each executed
+  across differentiated formats. Default = 3 motivators x 2 formats = 6 creatives, product
+  preserved, concept + format deliberately varied.
+  Use when the user wants a diversified ad set, multiple hooks, ads addressing different customer
+  reasons, batch creative for A/B or multi-audience testing, or "more like this" but meaningfully
+  different.
+  Triggers: creative diversity, diversified creatives, ad set, multi-concept ads, different hooks,
+  different motivators, variants, remixes, resizes, seasonal spins, multiple backgrounds, batch
+  creatives.
 user-invocable: true
 ---
 
