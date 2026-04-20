@@ -75,6 +75,21 @@ If the user has only given you the source image and a one-liner, ask one short c
 
 Don't over-interview. If the user says "just vibe it", infer the audience and motivator candidates from the creative + brand yourself and present them for approval.
 
+### 1c. Inventory brand assets on the canvas
+
+Before motivator work, look at the source creative again -- this time scanning the canvas (not the product) for brand assets that the variants will need to carry forward. Without this pass the model treats text/logo as scene decoration and silently drops them.
+
+Catalog three buckets:
+- **Text** -- every headline, tagline, sub-copy, badge text, price, CTA, legal line. Quote each verbatim, note rough placement (top-left, lower third, centered over copy space, etc.) and visual style (bold condensed sans, handwritten script, foil emboss).
+- **Logo / wordmark** -- describe the lockup (mark + wordmark, mark only, wordmark only), color, and placement and size relative to the canvas.
+- **Other marks** -- seals, certifications, "new" / "limited edition" stickers, regulatory icons, retailer marks.
+
+Surface the inventory back to the user in one short block before moving on:
+
+> I see these brand assets on the canvas: headline "14 days. Visible difference." (top-left, bold condensed sans), wordmark "AURA" bottom-right (small, white). I'll carry them through every variant unless you tell me to drop them on a specific row. Sound right?
+
+**Default = carry through.** Opt-out is per variant in Step 4, not global. If the source genuinely has no text or logo, state "no canvas text or logo detected" and skip the carry-forward column / lock clause for the rest of the run -- don't clutter prompts with empty hooks.
+
 ## Step 2: Identify Motivators / Barriers
 
 This is the heart of the skill. A **motivator** is a reason the customer would buy. A **barrier** is a reason they would *not* buy, which the ad addresses and removes. Both work the same way structurally; pick whichever fits each audience insight better.
@@ -107,14 +122,16 @@ Example, skincare, motivator = *"I'm looking for dramatic, visible results"*:
 
 Before generating anything, draft the full plan as a single table and show it to the user. Default shape is **3 motivators x 2 formats each = 6 outputs.**
 
-| # | Motivator | Benefit | Theme | Visual concept | Format (aspect + lo-fi/hi-fi + focus) | Prompt |
-|---|-----------|---------|-------|----------------|---------------------------------------|--------|
-| 1a | "dramatic visible results" | clinical retinoid, 14 days | bold before/after | macro close-up of skin texture with bottle in frame | 4:5, hi-fi, product-focused | ... |
-| 1b | (same) | (same) | (same) | UGC: hand holding bottle in mirror selfie | 9:16, lo-fi, lifestyle | ... |
-| 2a | "exactly what my skin needs" | precisely formulated for sensitive skin | calm, reassuring, considered | bottle on sunlit marble bathroom counter | 1:1, hi-fi, product-focused | ... |
-| 2b | (same) | (same) | (same) | person in robe applying serum, morning light | 9:16, hi-fi, lifestyle | ... |
-| 3a | "recommended by a creator I trust" | creator-endorsed, real users | testimonial-style, authentic | creator holding bottle, looking at camera, text overlay "worth the hype" | 9:16, lo-fi, lifestyle | ... |
-| 3b | (same) | (same) | (same) | flat lay of bottle with handwritten note-style caption | 4:5, hi-fi, product-focused | ... |
+| # | Motivator | Benefit | Theme | Visual concept | Format (aspect + lo-fi/hi-fi + focus) | Text & logo | Prompt |
+|---|-----------|---------|-------|----------------|---------------------------------------|-------------|--------|
+| 1a | "dramatic visible results" | clinical retinoid, 14 days | bold before/after | macro close-up of skin texture with bottle in frame | 4:5, hi-fi, product-focused | keep verbatim "14 days. Visible difference." top-left; wordmark bottom-right | ... |
+| 1b | (same) | (same) | (same) | UGC: hand holding bottle in mirror selfie | 9:16, lo-fi, lifestyle | headline lower-third center for 9:16 safe area; small wordmark bottom-center | ... |
+| 2a | "exactly what my skin needs" | precisely formulated for sensitive skin | calm, reassuring, considered | bottle on sunlit marble bathroom counter | 1:1, hi-fi, product-focused | keep verbatim, top-left; wordmark bottom-right | ... |
+| 2b | (same) | (same) | (same) | person in robe applying serum, morning light | 9:16, hi-fi, lifestyle | none -- clean editorial cut, no overlay | ... |
+| 3a | "recommended by a creator I trust" | creator-endorsed, real users | testimonial-style, authentic | creator holding bottle, looking at camera, text overlay "worth the hype" | 9:16, lo-fi, lifestyle | keep verbatim, lower third; wordmark bottom-right | ... |
+| 3b | (same) | (same) | (same) | flat lay of bottle with handwritten note-style caption | 4:5, hi-fi, product-focused | keep verbatim, top-left; wordmark bottom-right | ... |
+
+The **Text & logo** column is where the inventory from Step 1c lands as a per-variant decision. Default = `keep verbatim, <placement>` for every row; the user can flip a row to `none -- clean editorial cut, no overlay` for an explicit opt-out. Re-placement is fine when the new aspect demands it -- absence is not.
 
 **Format-within-motivator rule.** Within each motivator, the two format executions must land in *different* quadrants of the format space. Mix:
 - **Aspect ratio** -- 9:16 Story/Reel, 4:5 feed, 1:1 square, 16:9 banner
@@ -137,6 +154,9 @@ Every prompt must preserve the product anchor while pushing hard on motivator an
    **Case B -- source creative + product images are attached (preferred when a product is featured):**
    > "Two reference types are attached. The first image is the existing creative -- use it to match the brand palette, lighting family, typography style, and overall aesthetic direction. The remaining images are product anchor shots -- use these to keep the product's shape, color, label, branding, and proportions EXACTLY correct. If any product detail in the scene would differ from the product anchor shots, the product anchor shots win. Only the surrounding scene, mood, framing, and composition change."
 
+   **Text & logo carry-forward (append when Step 1c found canvas assets, unless the row's "Text & logo" column is `none`):**
+   > "Additionally, the source creative contains brand text and/or a logo. Reproduce the headline text exactly as quoted -- "<verbatim text>" -- in the same font family/feel (<style cue from inventory>). Reproduce the logo with its existing shape, lockup, and color (<lockup description from inventory>). Placement may adapt to the new aspect ratio and composition (e.g. a 4:5 top-left headline may shift to upper-third center in 9:16 to respect the safe area), but the asset itself is preserved. Do not omit the text or logo unless this prompt explicitly says 'no overlay'."
+
 2. **State the motivator-driven concept** -- what's the ad *saying*, as a felt moment. "A woman in a bathrobe lit by morning window light, calmly holding the bottle, reassured expression" lands harder than "lifestyle shot of product user".
 
 3. **State the format delta aggressively** -- if this is the lo-fi/UGC execution, commit: handheld framing, slight imperfection, natural light, phone-camera color science. If hi-fi, commit: studio lighting, sharp product, deliberate composition. Timid deltas produce six similar-feeling ads.
@@ -155,6 +175,13 @@ Always pass references in this order so the prompt's role labeling matches the a
 Cap is 4 refs per call. If the user gave more than 3 product images, pick the 3 that show the product most clearly across distinct angles (front, side, detail / label close-up). Drop redundant near-duplicates -- four shots of the same angle hurt more than they help.
 
 For concrete language on lighting, camera/lens (lo-fi vs hi-fi control), color grading / film stocks, materiality, and text overlays, see `reference/nano-banana.md`. Consult it when you need to sharpen a prompt beyond the structural rules above -- especially when a format delta isn't landing (reach for camera/lens cues) or the mood needs to differ between motivators (reach for lighting recipes).
+
+### Carrying text + logo forward
+
+When Step 1c surfaced canvas assets, two rules keep them landing in the output:
+
+- **Quote source text verbatim** in the prompt -- never paraphrase. Pair the quoted line with named placement (top-left, lower third, centered) and a font cue (bold condensed sans, handwritten script). For long source copy, keep the headline as quoted and let the supporting lines become implied copy space rather than fighting the renderer with a paragraph. See the "Text overlays" section in `reference/nano-banana.md` for placement and material cues.
+- **Describe the logo by what's visible**, not by brand name. "Small white wordmark, sans-serif, bottom-right corner" renders; "the AURA logo" does not -- the model has no reliable knowledge of the brand's actual mark and will invent one. If it's a combined lockup, describe both the mark (shape, color) and the wordmark (font feel, color) and how they sit relative to each other.
 
 ### Format cues to reach for
 
@@ -217,4 +244,5 @@ project_name/
 - **Two outputs for the same motivator look too similar** -- the format deltas are too soft. Push harder on lo-fi vs hi-fi and lifestyle vs product-focused, not just aspect ratio.
 - **Product drifts off-anchor in a scene variant** -- strengthen the lock line and pass more product reference images (up to 4). Mention specific parts the model keeps distorting: *"Keep the bottle silhouette, the label placement, and the cap color EXACTLY as in the reference."*
 - **Off-brand look sneaks in** -- the prompt probably abandoned the source creative's palette and tone. Add an explicit "match the color palette, lighting family, and visual tone of the first reference image" clause.
+- **Variants dropped the source's headline or logo** -- the prompt didn't carry the inventoried assets forward. Confirm Step 1c actually ran and produced an inventory, re-add the verbatim quoted text + logo placement clause to the lock block, and check the table row's "Text & logo" column wasn't accidentally set to `none`. If the asset is present but malformed (garbled text, distorted mark), tighten the description -- name the font feel and exact placement, or describe the logo by mark + wordmark + color rather than by brand name.
 - **API errors** -- verify `STUDIO_API_KEY` in `~/.gemoniq-studio/config.json` or env; check `STUDIO_BASE_URL` if running against a non-default server.

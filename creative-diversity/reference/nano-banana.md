@@ -82,6 +82,14 @@ Generic descriptions produce generic images. Be concrete about the non-product s
 
 Keep headlines short (2-5 words). Long copy rarely renders cleanly; pair short headline + implied supporting copy space.
 
+### Carrying text/logo forward from a source creative
+
+Different problem from authoring a new headline -- here the source already has assets and the variants need to keep them. Three rules:
+
+- **Quote source text verbatim**; do not paraphrase. Long source copy -> keep the headline as quoted, let supporting lines become implied copy space.
+- **Describe the logo by what's visible** (mark + wordmark, color, lockup), not by brand name. The model renders the description, not its training-time knowledge of the brand.
+- **Aspect changes shift placement, not presence.** A 4:5 top-left headline can move to upper-third center in 9:16 to respect safe area, but the asset stays.
+
 ## Reference images -- two roles, label them in the prompt
 
 References do double duty: one says "this is the brand look", others say "this is the exact product." The model averages across refs unless you tell it which is which, so always disambiguate the roles in the prompt text.
