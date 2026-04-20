@@ -16,7 +16,7 @@ Takes loose creative context and converts it into a highly technical Nano Banana
 
 ## Prerequisites
 
-**Before doing anything else, verify the `STUDIO_API_KEY` is configured.** Do this check *first* — do not gather context, engineer prompts, or run any generation commands until the key is in place. Otherwise the user invests effort upfront and only hits a credential prompt at the end of the workflow.
+**Before doing anything else, verify the `GEMONIQ_API_KEY` is configured.** Do this check *first* — do not gather context, engineer prompts, or run any generation commands until the key is in place. Otherwise the user invests effort upfront and only hits a credential prompt at the end of the workflow.
 
 Run this check:
 
@@ -24,19 +24,19 @@ Run this check:
 test -f ~/.gemoniq-studio/config.json && echo "configured" || echo "missing"
 ```
 
-Also accept `STUDIO_API_KEY` exported in the environment (`echo ${STUDIO_API_KEY:+set}`).
+Also accept `GEMONIQ_API_KEY` exported in the environment (`echo ${GEMONIQ_API_KEY:+set}`).
 
 If **missing**, ask the user inline:
 
-> Before we generate anything, this skill needs a `STUDIO_API_KEY`. Grab one at https://app.gemoniq.com/settings/api and paste it here — I'll save it for you so you don't have to set it up again.
+> Before we generate anything, this skill needs a `GEMONIQ_API_KEY`. Grab one at https://app.gemoniq.com/settings/api and paste it here — I'll save it for you so you don't have to set it up again.
 
 Once the user pastes the key, save it for them automatically:
 
 ```bash
-mkdir -p ~/.gemoniq-studio && printf '{"STUDIO_API_KEY": "%s"}\n' "<pasted-key>" > ~/.gemoniq-studio/config.json && chmod 600 ~/.gemoniq-studio/config.json
+mkdir -p ~/.gemoniq-studio && printf '{"GEMONIQ_API_KEY": "%s"}\n' "<pasted-key>" > ~/.gemoniq-studio/config.json && chmod 600 ~/.gemoniq-studio/config.json
 ```
 
-Do **not** instruct the user to run `export` or hand-edit the config file themselves — the agent handles setup. `STUDIO_BASE_URL` is optional and defaults to `https://app.gemoniq.com`.
+Do **not** instruct the user to run `export` or hand-edit the config file themselves — the agent handles setup. `GEMONIQ_BASE_URL` is optional and defaults to `https://app.gemoniq.com`.
 
 ## Step 1: Gather Context
 
@@ -102,7 +102,7 @@ python scripts/generate_image.py \
     --ref <style_reference>
 ```
 
-**Credentials.** Already handled in the Prerequisites step above. The script also reads the same `~/.gemoniq-studio/config.json` or `STUDIO_API_KEY` env var as a fallback.
+**Credentials.** Already handled in the Prerequisites step above. The script also reads the same `~/.gemoniq-studio/config.json` or `GEMONIQ_API_KEY` env var as a fallback.
 
 **Flag reference:**
 - `--prompt` -- the engineered prompt (required)
@@ -133,4 +133,4 @@ project_name/
 - **Product not matching ref** → strengthen lock: "Keep product EXACTLY as shown. Same shape, same label, same colors."
 - **Wrong mood/tone** → adjust lighting and color grading descriptors
 - **Text rendering issues** → use Nano Banana Pro model: `--model gemini-3-pro-image-preview`
-- **API errors** → verify `STUDIO_API_KEY` in `~/.gemoniq-studio/config.json` or env; check `STUDIO_BASE_URL` if running against a non-default server
+- **API errors** → verify `GEMONIQ_API_KEY` in `~/.gemoniq-studio/config.json` or env; check `GEMONIQ_BASE_URL` if running against a non-default server

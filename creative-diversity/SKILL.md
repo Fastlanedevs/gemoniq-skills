@@ -25,25 +25,25 @@ Why this matters: changing *why an ad works* produces more testable, more media-
 
 ## Prerequisites
 
-Before anything else, verify `STUDIO_API_KEY` is configured. Do this *first* -- don't gather context, identify motivators, or engineer prompts until the key is in place, otherwise the user invests effort upfront and hits a credential wall at generation time.
+Before anything else, verify `GEMONIQ_API_KEY` is configured. Do this *first* -- don't gather context, identify motivators, or engineer prompts until the key is in place, otherwise the user invests effort upfront and hits a credential wall at generation time.
 
 ```bash
 test -f ~/.gemoniq-studio/config.json && echo "configured" || echo "missing"
 ```
 
-Also accept `STUDIO_API_KEY` exported in the environment (`echo ${STUDIO_API_KEY:+set}`).
+Also accept `GEMONIQ_API_KEY` exported in the environment (`echo ${GEMONIQ_API_KEY:+set}`).
 
 If **missing**, ask the user inline:
 
-> Before we generate anything, this skill needs a `STUDIO_API_KEY`. Grab one at https://app.gemoniq.com/settings/api and paste it here -- I'll save it for you.
+> Before we generate anything, this skill needs a `GEMONIQ_API_KEY`. Grab one at https://app.gemoniq.com/settings/api and paste it here -- I'll save it for you.
 
 Once the user pastes the key, save it automatically:
 
 ```bash
-mkdir -p ~/.gemoniq-studio && printf '{"STUDIO_API_KEY": "%s"}\n' "<pasted-key>" > ~/.gemoniq-studio/config.json && chmod 600 ~/.gemoniq-studio/config.json
+mkdir -p ~/.gemoniq-studio && printf '{"GEMONIQ_API_KEY": "%s"}\n' "<pasted-key>" > ~/.gemoniq-studio/config.json && chmod 600 ~/.gemoniq-studio/config.json
 ```
 
-Don't instruct the user to run `export` or hand-edit the config -- the agent handles setup. `STUDIO_BASE_URL` is optional and defaults to `https://app.gemoniq.com`.
+Don't instruct the user to run `export` or hand-edit the config -- the agent handles setup. `GEMONIQ_BASE_URL` is optional and defaults to `https://app.gemoniq.com`.
 
 ## Step 1: Gather Source + Context
 
@@ -241,4 +241,4 @@ project_name/
 - **Product drifts off-anchor in a scene variant** -- strengthen the lock line and pass more product reference images (up to 4). Mention specific parts the model keeps distorting: *"Keep the bottle silhouette, the label placement, and the cap color EXACTLY as in the reference."*
 - **Off-brand look sneaks in** -- the prompt probably abandoned the source creative's palette and tone. Add an explicit "match the color palette, lighting family, and visual tone of the first reference image" clause.
 - **Variants dropped the source's headline or logo** -- the prompt didn't carry the inventoried assets forward. Confirm Step 1c actually ran and produced an inventory, re-add the verbatim quoted text + logo placement clause to the lock block, and check the table row's "Text & logo" column wasn't accidentally set to `none`. If the asset is present but malformed (garbled text, distorted mark), tighten the description -- name the font feel and exact placement, or describe the logo by mark + wordmark + color rather than by brand name.
-- **API errors** -- verify `STUDIO_API_KEY` in `~/.gemoniq-studio/config.json` or env; check `STUDIO_BASE_URL` if running against a non-default server.
+- **API errors** -- verify `GEMONIQ_API_KEY` in `~/.gemoniq-studio/config.json` or env; check `GEMONIQ_BASE_URL` if running against a non-default server.

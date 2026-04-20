@@ -1,6 +1,6 @@
 """Minimal Gemoniq Studio image generator.
 
-Reads STUDIO_API_KEY from the environment or ~/.gemoniq-studio/config.json.
+Reads GEMONIQ_API_KEY from the environment or ~/.gemoniq-studio/config.json.
 Makes a single POST to the Gemoniq generate-image endpoint and writes the result to disk.
 No retries, no interactive prompts, no edit mode -- keep this script small on purpose.
 
@@ -11,20 +11,20 @@ import os, sys, json, argparse, base64
 import urllib.request
 from pathlib import Path
 
-BASE_URL = os.environ.get("STUDIO_BASE_URL", "https://app.gemoniq.com").rstrip("/")
+BASE_URL = os.environ.get("GEMONIQ_BASE_URL", "https://app.gemoniq.com").rstrip("/")
 CONFIG_PATH = Path.home() / ".gemoniq-studio" / "config.json"
 
 
 def get_api_key():
-    key = os.environ.get("STUDIO_API_KEY")
+    key = os.environ.get("GEMONIQ_API_KEY")
     if key:
         return key
     if CONFIG_PATH.exists():
         try:
-            return json.loads(CONFIG_PATH.read_text()).get("STUDIO_API_KEY")
+            return json.loads(CONFIG_PATH.read_text()).get("GEMONIQ_API_KEY")
         except Exception:
             pass
-    print(f"ERROR: STUDIO_API_KEY not found. Put it in {CONFIG_PATH} or export it.", file=sys.stderr)
+    print(f"ERROR: GEMONIQ_API_KEY not found. Put it in {CONFIG_PATH} or export it.", file=sys.stderr)
     sys.exit(1)
 
 

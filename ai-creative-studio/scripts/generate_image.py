@@ -1,12 +1,12 @@
 """Generate a single image via the Gemoniq Studio API (metered, token-authenticated).
 
 Credentials resolution order:
-  1. Environment variables STUDIO_BASE_URL / STUDIO_API_KEY
+  1. Environment variables GEMONIQ_BASE_URL / GEMONIQ_API_KEY
   2. ~/.gemoniq-studio/config.json (auto-created on first interactive run)
-  3. Interactive prompt for STUDIO_API_KEY (saved to config.json)
+  3. Interactive prompt for GEMONIQ_API_KEY (saved to config.json)
 
-STUDIO_BASE_URL defaults to https://app.gemoniq.com when neither env nor config
-sets it. Override via env for local dev (e.g. STUDIO_BASE_URL=http://localhost:3000).
+GEMONIQ_BASE_URL defaults to https://app.gemoniq.com when neither env nor config
+sets it. Override via env for local dev (e.g. GEMONIQ_BASE_URL=http://localhost:3000).
 
 Usage:
     # Text-to-image
@@ -49,18 +49,18 @@ def _save_config(config):
 
 def resolve_credentials():
     config = _load_config()
-    base_url = (os.environ.get("STUDIO_BASE_URL") or config.get("STUDIO_BASE_URL") or DEFAULT_BASE_URL).rstrip("/")
-    api_key = os.environ.get("STUDIO_API_KEY") or config.get("STUDIO_API_KEY")
+    base_url = (os.environ.get("GEMONIQ_BASE_URL") or config.get("GEMONIQ_BASE_URL") or DEFAULT_BASE_URL).rstrip("/")
+    api_key = os.environ.get("GEMONIQ_API_KEY") or config.get("GEMONIQ_API_KEY")
     if not api_key:
         if not sys.stdin.isatty():
-            print(f"ERROR: STUDIO_API_KEY not set. Add it to {CONFIG_PATH}, export it, or run interactively.", file=sys.stderr)
+            print(f"ERROR: GEMONIQ_API_KEY not set. Add it to {CONFIG_PATH}, export it, or run interactively.", file=sys.stderr)
             sys.exit(1)
-        print(f"No STUDIO_API_KEY found. Get one at {base_url}/settings/api", file=sys.stderr)
-        api_key = input("Enter STUDIO_API_KEY: ").strip()
+        print(f"No GEMONIQ_API_KEY found. Get one at {base_url}/settings/api", file=sys.stderr)
+        api_key = input("Enter GEMONIQ_API_KEY: ").strip()
         if not api_key:
             print("ERROR: no key provided", file=sys.stderr)
             sys.exit(1)
-        config["STUDIO_API_KEY"] = api_key
+        config["GEMONIQ_API_KEY"] = api_key
         _save_config(config)
         print(f"Saved to {CONFIG_PATH}", file=sys.stderr)
     return base_url, api_key
