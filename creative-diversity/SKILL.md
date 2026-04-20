@@ -69,11 +69,7 @@ If no product is featured (e.g. the creative is a typographic poster, an abstrac
 - **Audience** -- who the brand sells to (demographics, mindset, what they care about)
 - **Constraints** -- "leave copy space top-left", "keep logo placement", "never change the bottle color", "must include the tagline"
 
-If the user has only given you the source image and a one-liner, ask one short clarifier:
-
-> Who's the audience for this product, and what are the main reasons they'd buy it -- or hesitate to buy it? Any constraints I should respect (leave copy space, keep logo placement, etc.)?
-
-Don't over-interview. If the user says "just vibe it", infer the audience and motivator candidates from the creative + brand yourself and present them for approval.
+Don't ask the user to spell out audience or motivators -- infer audience and motivator candidates from the creative + brand yourself and present them in the Step 4 plan for approval. The user can edit there. Constraints, if any, will surface naturally in the user's brief; don't prompt for them.
 
 ### 1c. Inventory brand assets on the canvas
 
